@@ -1,48 +1,31 @@
 <?php
 
+include_once 'Request.php';
+include_once 'Response.php';
+
+use App\Request;
+use App\Response;
+
 class Main
 {
     private static $host = 'https://devza.com';
+    private static $expectCt;
+    private static $reportTo;
 
     public function init()
     {
-        $res = $this->makeGetCall('/cftest.php');
+        $res = Request::get('/cftest.php');
 
-        if ($res['status'] === 503) {
-            $htmlData = $this->getHtmlBody($res['body']);
+        if ((int)$res->getStatusCode() === 503) {
+            $htmlData = $this->getHtmlBody($res->getResponse());
             $postUrl = $this->parseBodyAndGetUrlForXhr($htmlData);
             $paramKey = 'v_'.$htmlData['ray_id'];
-            $firstPostReq = $this->makePostRequest($postUrl, [$paramKey => '']);
-            print_r($firstPostReq);
+            $firstPostReq = Request::post($postUrl, [$paramKey => '']);
+            print_r($firstPostReq->getHeaders());
             die();
         }
 
         return $res;
-    }
-
-    private function makePostRequest($path, $params)
-    {
-        $cookiePath = '/tmp/bypass.txt';
-        $headers[] = 'content-type: application/json;charset=UTF-8';
-        $headers[] = 'accept: application/json';
-        $ch = curl_init(self::$host.$path);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_VERBOSE, 1);
-
-        curl_setopt($ch, CURLOPT_COOKIESESSION, true);
-        curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiePath);
-        curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiePath);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        ob_start();
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        ob_end_clean();
-        curl_close ($ch);
-        return ['status' => $httpCode, 'body' => $response];
     }
 
     private function getHtmlBody($body)
@@ -101,7 +84,16 @@ class Main
          * This $scriptUrl url will return a minified JS which contains the information needed to inform
          */
         $scriptUrl = '/cdn-cgi/challenge-platform/h/g/orchestrate/jsch/v1';
-        $scriptData = (string)$this->makeGetCall($scriptUrl)['body'];
+        $res = Request::get($scriptUrl);
+        $headers = $res->getHeaders();
+        if (array_key_exists('expect-ct', $headers)) {
+            self::$expectCt = $headers['expect-ct'];
+        }
+        if (array_key_exists('report-to', $headers)) {
+            self::$reportTo = $headers['report-to'];
+        }
+
+        $scriptData = (string)$res->getResponse();
         $delimiter = ',/0.';
         $urlPathFromScript = '0.'.explode('/,', explode($delimiter, $scriptData)[1])[0].'/';
         $url = '/cdn-cgi/challenge-platform/h/g/generate/ov1/';
@@ -119,35 +111,9 @@ class Main
          *      <----------- Fixed -----------------------------------------><---- Extracted by loading the dynamically inject js and then parsing the js script ----------><-- Ray ID -----><-- cHash(JS variable) ->
          */
 
-
         return $url;
     }
-
-    private function makeGetCall($path)
-    {
-
-        $cookiePath = '/tmp/bypass.txt';
-
-        $ch = curl_init(self::$host.$path);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_VERBOSE, 0);
-
-        curl_setopt($ch, CURLOPT_COOKIESESSION, true);
-        curl_setopt($ch, CURLOPT_COOKIEJAR, $cookiePath);
-        curl_setopt($ch, CURLOPT_COOKIEFILE, $cookiePath);
-
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-
-        ob_start();
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        ob_end_clean();
-        curl_close ($ch);
-        return ['status' => $httpCode, 'body' => $response];
-    }
 }
-
-
 
 
 $app = new Main();
