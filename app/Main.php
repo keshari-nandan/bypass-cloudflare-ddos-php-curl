@@ -98,8 +98,7 @@ class Main
     {
         /*
          * I got this url by analysing html returned by the url https://devza.com/cftest.php
-         * By looking content of dynamically inject JS file,
-         * I noticed that this string is used to for a url for the next xhr request
+         * This $scriptUrl url will return a minified JS which contains the information needed to inform
          */
         $scriptUrl = '/cdn-cgi/challenge-platform/h/g/orchestrate/jsch/v1';
         $scriptData = (string)$this->makeGetCall($scriptUrl)['body'];
@@ -109,6 +108,18 @@ class Main
         $url .= $urlPathFromScript;
         $url .= $htmlData['ray_id'].'/';
         $url .= trim($htmlData['cHash']);
+
+        /*
+         * This will form a url which is used at the end to tell the server
+         * that browser is safe and then server passes the request to actual host.
+         *
+         * I noticed as below -
+         *
+         * Url: https://devza.com/cdn-cgi/challenge-platform/h/g/generate/ov1/0.8121086861055473:1603645414:03d11a3202107c611cce457b50ab30a8c2b5b27edd662c638dc9157f3c8191d4/5e7d8955ac641acc/2bb648d50bfec4d
+         *      <----------- Fixed -----------------------------------------><---- Extracted by loading the dynamically inject js and then parsing the js script ----------><-- Ray ID -----><-- cHash(JS variable) ->
+         */
+
+
         return $url;
     }
 
