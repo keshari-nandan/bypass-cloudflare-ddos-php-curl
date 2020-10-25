@@ -97,7 +97,7 @@ class Main
     private function parseBodyAndGetUrlForXhr($htmlData)
     {
         /*
-         * I got this url by analysing html return by the url https://devza.com/cftest.php
+         * I got this url by analysing html returned by the url https://devza.com/cftest.php
          * By looking content of dynamically inject JS file,
          * I noticed that this string is used to for a url for the next xhr request
          */
