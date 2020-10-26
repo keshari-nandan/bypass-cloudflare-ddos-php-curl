@@ -77,3 +77,7 @@ Note: In my case final call is returning 302 instead of actual response. Because
         ```
      - This will execute the script and print the response in terminal.
  
+ ## Other ways to do this
+ - We can use some browser emulator libraries available in PHP (eg. - [Mink](https://github.com/minkphp/Mink), [BrowserExt](https://github.com/scraperlab/browserext), etc.), if we do not want to use any other language.
+ - There are very good libraries and tools are available to bypass this check, eg. PhantomJs, CasperJs etc.
+ 
