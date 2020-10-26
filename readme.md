@@ -1,7 +1,7 @@
 # Cloudflare Encryption Bypass 
 
 ## Steps
-- You load the url
+- Load the url in the browser.
 - URL will return 503 (Service Unavailable), In the same request it will report to Cloudflare
 - Now cloudflare js file from url [https://devza.com/cdn-cgi/challenge-platform/h/g/orchestrate/jsch/v1], will be injected in the DOM dynamically.
 - In first request some html content was returned in response, with some JS variable as below.
