@@ -49,3 +49,31 @@ v_{ray_id}: "Some Hash genrated by dynamically injected JS"
 - At the end, form will be submitted by JS, and final value will be returned to the user.
 
 Note: In my case final call is returning 302 instead of actual response. Because I could not identify the logic written to generate the hash in JS.
+
+## Project Setup & Executing
+ - Clone the project
+ - You can run this project in two ways `With Docker` or `Without Docker`
+   - With Docker:
+     - Install Docker in you machine
+     - Update docker-compose with your username & password as below - 
+        ```yaml
+        version: '3.1'
+        
+        services:
+          app:
+            build:
+              context: app
+              dockerfile: Dockerfile
+            volumes:
+              - ./app:/app
+        ```
+       - Now run `docker-compose run app sh -c "php Main.php"` using the terminal.
+       - This will download the php5.6 docker image and run the script, you will get the output printed in terminal in JSON format.
+       
+   - Without Docker:
+     - Go to your cloned project directory in terminal and run the below command - 
+        ```shell script
+        php app/Main.php
+        ```
+     - This will execute the script and print the result in JSON format in terminal.
+ 
