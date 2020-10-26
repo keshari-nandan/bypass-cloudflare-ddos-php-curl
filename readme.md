@@ -26,7 +26,7 @@
     hh: "HbYuDgs8ryeluQ90odFATiSa1u+d70/EMWIsqYuQbJg=",
 }
 ```
-- Also, some form with some data was returned as below - 
+- Also, some form with some data in it, was returned as below - 
 ```html
   <form class="challenge-form" id="challenge-form" action="/cftest.php?__cf_chl_jschl_tk__=25e5a8dbdc20eaf7511db7551d3e492b417693fb-1603731738-0-AbbebxOOAdCaeGjCDaRZF8_hgRHYnXV9o96cUZbfySgcsJMvKHm7XR0tvgthbD01R0MBnak3POeIkRgCtRqCpICR3iopR-jUBe5ad08MytFUPlUWPHsMngV3tgYMom701Hoxqm5Hby34crgf2RKtnTPIN7vez11H3Px-oy9Ajz15YOb_C4izmqI5G5ahR681md7p4oe81TMb4PDme1jBclyJug8cUF4H7BRMLbwv4aulfUhNyeo-BZJF3jHz_Yq6MKTQpBUH-too8U2PWWHM90UksO676I_prNbLEADf0lD7Qnc6wbWwHdU1g2IYfz_0Hw" method="POST" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="r" value="bece93fd894b8d7d105bdd5b77ed4f4cb77d4a72-1603731738-0-AWNOJYe1fptdTR43/DQQmL7toU0h6zOXAXRIB/X59EP3QkZx5uzOCiT8eiw3qgqZSDDc5vFhhsO0j9hB8R69g+BfO3xjTbdV2+pngsdqH5x4phomYQxURWAaBY7GPkb2DB/iXVTSDubfvFPJIU2vJqEcfl2MP4ifxxi4L9NdArF2Crj/iOJ4vu8IqKzZAcr5+SA5wXy2HhUDP0yax2d5VpD0DxJSQZhws3DTuJPUJiKqcRaaMJn1diWRwAbtamOTZLDqKonhJAzm1EEDh6bCcsuWUdEGzZnmfg/hEA10uLS4Ph7xmZXMMJvWFKPkbye5pBARQSfQ98JWmDaGrtMIGXg0/IGHixgEmW+XN4eU5+LTnrkG9vsqlo2aWwlX6uX3H0rxTdRm1OnxpEJ+OyUs683+HGaeAlbzxV4Zjik5Zv8/WjbBDzUf6p2tByOddLMWp659QInfrHCWhSO2H/Py++2KNi3xsYFuMYBeI1EvdvzXqTDyvUP+om2T4jjylTU9QlqbNgjK/L6Kzgt3qfFcE8ymA3gItXQiM0F7BtfEbIMDJQjqZKu+o4BsqyRPpXwhMl0WqgEZeDdQdJYVWTb6KMzMyyXIbu9exGH/93XKWZKOj9+swMCvEFyN0oTI/NZr+BSVaVwxkrJgyaEtHXBG01at7H1y4p5nPJL+LaDeF1gxsy8mWkjH1NEPANvu9nUT0YGrWh5bcqO6MpxzjCl0Nb4UDbdQmOgrywf6ppZuGyepk6qZFGIs/29BdsxcO8n2NpVMQWxjGLaPZ7Za70K5jhCbeJ8FiP3km/fR9EdsjDk21o4bUwSWVkvVeoO++ekrsMVivk+s24BsL7Cvcxnt36KmavJvwtHP5h6O1KLD6cnB7PwZtUDfrT6bNBqnNuDAQh4hVzhpeMCti/dHyFG4tzpwtWuXFmS6+MO/zt3K2Gr5EJlPK1SQokUd5ljtXzSPVWZuO4MWcQOsPkT7rJfkl83oK1tQQWX7YRSMdec06onmr2wgjAcZYxGzGA4E4czHEtAnGPXqSK1fsIHvj1ld5++LofNKOiVoogVQ7KsktHJEeyKZ4wEOe+QMQCy586e5Z5ih7DRZO9YdX5AJgt54nOV2KzvVL1S7pE1EXQ7BVtN+NmgI5gYK6C6beWldZ4kDDuHr2ZlRiy8XlnyRaveUsAaHZr5hwAFlb9kySJyGEYNzE5dzSiXlUEcnFJLTYf4MgQBu4fA9IAben0gKPgp0+V1YHRgNouUfTjCl7xlqqMAjvG3jGdhPyULV3uwbOrtKy798NmRWKvys9Wk+MnjmFKMZ/p/lUPbWDHLdlb+u5K4tHkY0YKBN6h+X3SPHuT0yp36yxCSnjJdIXI0iupsxUbuh+T8a9lf++ik0TQvILmi5K9Ym8j7BIePzUo7W28q+U5BXvT2KWFudiStpvefMSX2IhjxFSyBRwCIsCBBt7B8eBfI47g7Fr6oZV/wAfp1hIXSaMdwyFRxE/5hlVnbm7Ms="/>
@@ -41,11 +41,11 @@
       https://devza.com/cdn-cgi/challenge-platform/h/g/generate/ov1/0.8121086861055473:1603645414:03d11a3202107c611cce457b50ab30a8c2b5b27edd662c638dc9157f3c8191d4/5e7d8955ac641acc/2bb648d50bfec4d
       <----------- Fixed -----------------------------------------><---- Extracted by loading the dynamically inject js and then parsing the js script ----------><-- Ray ID -----><-- cHash(JS variable) ->
 ```
-- Once cloudflare is done with DDoS check in the browser, Above url will be called two times with some hash (different hash for each request) as below - 
+- Once cloudflare is done with DDoS check in the browser, above url will be called two times with some hash (different hash for each request) as below - 
 ```json
 v_{ray_id}: "Some Hash genrated by dynamically injected JS"
 ```
 - The above two request will set the cookies in the browser
-- At the end form will be submitted and final value will be returned to the user.
+- At the end, form will be submitted by JS, and final value will be returned to the user.
 
-Note: In my case final call is returning 302 instead of actual response.
+Note: In my case final call is returning 302 instead of actual response. Because I could not identify the logic written to generate the hash in JS.
