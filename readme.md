@@ -75,5 +75,5 @@ Note: In my case final call is returning 302 instead of actual response. Because
         ```shell script
         php app/Main.php
         ```
-     - This will execute the script and print the result in JSON format in terminal.
+     - This will execute the script and print the response in terminal.
  

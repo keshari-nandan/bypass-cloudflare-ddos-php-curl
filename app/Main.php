@@ -145,4 +145,3 @@ class Main
 $app = new Main();
 $res = $app->init();
 print_r($res);
-die();
