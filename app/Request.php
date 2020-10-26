@@ -75,7 +75,8 @@ class Request
 
         if ($isPost) {
             curl_setopt($ch, CURLOPT_POST, $isPost);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+            $data = $isWebRequest ? http_build_query($params) : json_encode($params);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         }
         curl_setopt($ch,CURLOPT_ENCODING , "gzip");
         curl_setopt($ch, CURLOPT_USERAGENT, $userAgent);

@@ -19,10 +19,24 @@ class Main
         if ((int)$res->getStatusCode() === 503) {
             $htmlData = $this->getHtmlBody($res->getResponse());
             $postUrl = $this->parseBodyAndGetUrlForXhr($htmlData);
-            $paramKey = 'v_'.$htmlData['ray_id'];
-            $firstPostReq = Request::post($postUrl, [$paramKey => '']);
-            print_r($firstPostReq->getHeaders());
-            die();
+
+            /*
+             * Noticed there two post request sent at the end of the process so inform the server
+             * that it can redirect the request to actual host
+             */
+
+            // I figured out the request key name, but was unable figure out how that data was generated
+            // I think it is generated in JS script, since it is minified, so I was unable to figure out the logic written in there
+            $firstReqParamKey = ['v_'.$htmlData['ray_id'] => $htmlData['r']];
+            $firstPostReq = Request::post($postUrl, $firstReqParamKey);
+            // I figured out the request key name, but was unable figure out how that data was generated
+            // I think it is generated in JS script, since it is minified, so I was unable to figure out the logic written in there
+            $secondReqParamKey = ['v_'.$htmlData['ray_id'] => ''];
+            $secondPostReq = Request::post($postUrl, $secondReqParamKey);
+
+            // Now since we have called the all the api's and all the required has be set, we can request for final output by submitting the form
+            $finalReq = Request::post($htmlData['action'], $htmlData['form'], [], true);
+            return $finalReq->getResponse();
         }
 
         return $res;
@@ -35,11 +49,23 @@ class Main
         $htmlData = [];
 
         /*
+         * Get form action
+         */
+        $selector = new DOMXPath($document);
+        $result = $selector->query('//form');
+        $form = $result->item(0);
+        if (null !== $form) {
+            $htmlData['action'] = $form->getAttribute('action');
+        }
+
+        /*
          * Extract the from data from the html form tag
          */
+        $formData = [];
         foreach ($document->getElementsByTagName('input') as $input) {
-            $htmlData[$input->getAttribute('name')] = $input->getAttribute('value');
+            $formData[$input->getAttribute('name')] = $input->getAttribute('value');
         }
+        $htmlData['form'] = $formData;
 
         /*
          * Get the ray_id from the html
@@ -69,7 +95,7 @@ class Main
                             $htmlData[$data[0]] = str_replace('"', '', $data[1]);
                         }
                     }
-                    // TODO extract other js object properties too if needed
+                    // TODO extract other js object properties here, if needed
                 }
             }
         }
